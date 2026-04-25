@@ -13,6 +13,7 @@
 - 3개 트랙 전략 문서
 - Flutter 공식 문서/오픈소스 큐레이션
 - 부트스트랩 세팅 가이드
+- 윈도우 팀원 전용 핸드오프 가이드
 - Codex 재사용 스킬
 
 ## What Is Not Ready Yet
@@ -34,5 +35,5 @@
 1. 주력 트랙과 앱 아이디어를 명세서에 바로 적는다.
 2. MacBook에 Flutter를 설치하고 `flutter doctor`를 통과시킨다.
 3. Windows 팀원 노트북도 같은 방식으로 최소 1개 타깃을 연다.
-4. 빈 저장소에 첫 부트스트랩 커밋을 푸시한다.
+4. Windows 데스크톱이 필요하면 Visual Studio의 `Desktop development with C++` 워크로드까지 설치한다.
 5. 앱 스캐폴드를 만든 뒤 핵심 플로우 1개를 먼저 닫는다.

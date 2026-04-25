@@ -10,6 +10,7 @@
 - 3개 트랙 대응 전략 문서
 - Flutter 공식 문서 및 대표 오픈소스 레퍼런스
 - 맥북/윈도우/깃허브/Flutter 초기 세팅 가이드
+- 윈도우 팀원 전용 핸드오프 문서
 - 재사용 가능한 Codex 스킬
 
 ## Current Assumptions
@@ -25,8 +26,9 @@
 1. `docs/ref/TRACK-STRATEGY.md`에서 주력 트랙을 정한다.
 2. `docs/specs/PROJECT-COMPLETION-SPEC-TEMPLATE.md`를 복제해 실제 프로젝트용 명세서를 작성한다.
 3. `docs/setup/BOOTSTRAP-SETUP.md`에 따라 MacBook과 Windows 개발 환경을 연다.
-4. 구현이 시작되면 `docs/status/PROJECT-STATUS.md`와 `docs/status/EXECUTION-CHECKLIST.md`를 갱신한다.
-5. Codex에게 반복적으로 맡길 때는 `skills/flutter-hackathon-bootstrap/SKILL.md`를 사용한다.
+4. Windows 팀원은 `docs/setup/WINDOWS-TEAMMATE-HANDOFF.md`를 기준으로 Android 또는 Windows 타깃 1개를 먼저 연다.
+5. 구현이 시작되면 `docs/status/PROJECT-STATUS.md`와 `docs/status/EXECUTION-CHECKLIST.md`를 갱신한다.
+6. Codex에게 반복적으로 맡길 때는 `skills/flutter-hackathon-bootstrap/SKILL.md`를 사용한다.
 
 ## Recommended Default
 

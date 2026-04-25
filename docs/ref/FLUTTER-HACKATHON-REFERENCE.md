@@ -8,8 +8,10 @@
 
 - Flutter 설치 시작점: [Get started with Flutter](https://docs.flutter.dev/get-started/install/macos/web)
 - VS Code 기반 설치: [Install Flutter using VS Code](https://docs.flutter.dev/install/with-vs-code)
+- Windows에서 Android 개발: [Start building Flutter Android apps on Windows](https://docs.flutter.dev/get-started/install/windows/mobile)
 - macOS에서 Android 개발: [Start building Flutter Android apps on macOS](https://docs.flutter.dev/get-started/install/macos/mobile-android?tab=first-start)
 - macOS에서 iOS 개발: [Make iOS apps](https://docs.flutter.dev/get-started/install/macos/mobile-ios)
+- Windows 데스크톱 개발: [Set up Windows development](https://docs.flutter.dev/platform-integration/windows/setup)
 - VS Code 사용 가이드: [Visual Studio Code](https://docs.flutter.dev/tools/vs-code)
 - DevTools: [Flutter and Dart DevTools](https://docs.flutter.dev/tools/devtools/overview)
 
@@ -33,6 +35,14 @@
 - 패키지 메타데이터: [The pubspec file](https://dart.dev/tools/pub/pubspec)
 - 패키지 허브: [pub.dev](https://pub.dev/)
 - macOS 릴리스: [Build and release a macOS app](https://docs.flutter.dev/deployment/macos)
+
+## Windows Teammate Notes
+
+- Flutter 공식 문서는 Windows에서 Android 개발을 별도 흐름으로 제공한다.
+- VS Code로 Flutter SDK 설치를 시작할 수 있다.
+- Windows 데스크톱 타깃까지 쓰려면 VS Code 외에 Windows용 Visual Studio가 필요하다.
+- Visual Studio에는 `Desktop development with C++` 워크로드가 필요하다.
+- 검증 기본 명령은 `flutter doctor -v`, `flutter devices`다.
 
 ### AI-Related Official References
 
@@ -128,6 +138,8 @@
 ## Practical Warnings
 
 - Flutter를 처음 설치하는 날에는 iOS와 Android를 동시에 완벽하게 열려고 하지 않는 편이 빠르다.
+- Windows 팀원은 Android만 필요하면 Windows desktop 툴체인을 뒤로 미뤄도 된다.
+- Windows desktop이 필요하면 "VS Code는 에디터, Visual Studio는 C++ 툴체인"이라는 구분을 초반에 분명히 해야 덜 막힌다.
 - 발표 기기 1개를 먼저 고정하고, 나머지 플랫폼은 보조 전략으로 둔다.
 - AI 기능은 온라인 의존성이 크므로 샘플 입력과 fallback 화면을 반드시 준비한다.
 - 심사에서는 코드의 우아함보다 데모의 안정성과 서사가 더 크게 보인다.

@@ -23,10 +23,12 @@
 5. 해커톤에서는 속도보다 데모 신뢰도를 우선한다.
 6. Flutter가 설치된 뒤에는 `flutter doctor`, `flutter analyze`, `flutter test`를 기본 검증 순서로 사용한다.
 7. 아직 Flutter가 설치되지 않았다면, 구현 대신 설치 블로커와 다음 행동을 문서화한다.
+8. Windows 사용자가 따라야 하는 단계는 macOS 절차와 분리해서 명확히 적는다.
 
 ## Default Working Model
 
 - MacBook: 명세, 구조 설계, iOS/macOS 관점 검증, Codex 기반 자동화
 - Windows 노트북: Android/Windows 관점 검증, 빠른 기기 테스트, 필요 시 OCR/보조 런타임
+- Windows 데스크톱 타깃을 쓰면 Visual Studio와 VS Code를 구분해서 안내한다.
 - Git: 코드와 문서의 단일 진실원
 - 공유 폴더 또는 클라우드 동기화: 스크린샷, 레퍼런스 이미지, 데모 자산

@@ -14,8 +14,9 @@ description: Use this skill when bootstrapping or steering a Flutter hackathon p
 3. `docs/ref/TRACK-STRATEGY.md`
 4. `docs/ref/FLUTTER-HACKATHON-REFERENCE.md`
 5. `docs/setup/BOOTSTRAP-SETUP.md`
-6. `docs/status/PROJECT-STATUS.md`
-7. `docs/status/EXECUTION-CHECKLIST.md`
+6. `docs/setup/WINDOWS-TEAMMATE-HANDOFF.md`
+7. `docs/status/PROJECT-STATUS.md`
+8. `docs/status/EXECUTION-CHECKLIST.md`
 
 필요하면 아래 참고도 읽는다.
 
@@ -28,6 +29,7 @@ description: Use this skill when bootstrapping or steering a Flutter hackathon p
 2. 완성 명세서 템플릿을 실제 프로젝트 명세로 바꾼다.
 3. Flutter 설치/검증/앱 스캐폴드까지 막힘 없이 이어준다.
 4. 진행 중인 구현이 트랙 전략과 어긋나지 않게 잡아준다.
+5. Windows 팀원도 문서만 보고 바로 따라올 수 있게 한다.
 
 ## Default Decision Rules
 
@@ -37,6 +39,8 @@ description: Use this skill when bootstrapping or steering a Flutter hackathon p
 - 화면이 3개 이상이면 `go_router` 도입을 우선 검토한다.
 - `genui` 같은 실험적 AI UI는 `AI Harness` 또는 `Wild Card` 증거가 필요할 때만 넣고, 반드시 fallback 화면을 둔다.
 - `melos`는 패키지가 3개 이상 생기기 전에는 미룬다.
+- Windows 팀원이 합류하면 Android 우선 경로와 Windows desktop 경로를 분리해서 안내한다.
+- Windows desktop이 필요하면 Visual Studio와 VS Code를 혼동하지 않게 먼저 못 박는다.
 
 ## Working Flow
 
@@ -51,10 +55,12 @@ description: Use this skill when bootstrapping or steering a Flutter hackathon p
 - `docs/specs/PROJECT-COMPLETION-SPEC-TEMPLATE.md`를 기준으로 실제 명세서를 만든다.
 - `Must Have` 3개를 넘기지 않는다.
 - `Explicitly Out`를 분명하게 적는다.
+- Windows 팀원의 설치/실행 경로도 명세서에 한 줄 이상 남긴다.
 
 ### 3. Open The Toolchain
 
 - `docs/setup/BOOTSTRAP-SETUP.md` 순서대로 Flutter를 설치한다.
+- Windows 팀원은 `docs/setup/WINDOWS-TEAMMATE-HANDOFF.md`를 우선 본다.
 - `flutter doctor`를 기준 검증으로 쓴다.
 - `flutter`, `dart`, `code` 중 무엇이 막히는지 상태 문서에 남긴다.
 

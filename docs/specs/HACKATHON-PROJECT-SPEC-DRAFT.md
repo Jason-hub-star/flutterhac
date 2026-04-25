@@ -73,6 +73,7 @@
 - 실제 기기/해상도 테스트
 - 속도 확인
 - 보조 데이터 처리
+- Windows desktop이 필요할 때만 Visual Studio C++ 워크로드 추가
 
 ## 7. First 8 Actions
 

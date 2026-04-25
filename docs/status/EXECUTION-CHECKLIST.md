@@ -7,6 +7,7 @@
 - [ ] MacBook에 Flutter SDK를 설치한다
 - [ ] `flutter doctor`를 통과시킨다
 - [ ] Windows 팀원 노트북에서 Android 또는 Windows 타깃 1개를 연다
+- [ ] Windows 데스크톱이 필요하면 Visual Studio C++ 워크로드까지 설치한다
 
 ## P1 — Core Product
 
@@ -40,3 +41,4 @@
 - [ ] 필요 시 `integration_test`
 - [ ] 발표 스크립트와 데모 순서를 정리한다
 - [ ] 제출 자산을 정리한다
+- [ ] Windows 팀원 기준 재현 절차가 문서대로 되는지 점검한다

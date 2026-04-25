@@ -177,6 +177,7 @@ assets/
 - MacBook 담당:
 - Windows 담당:
 - 공용 동기화 방식:
+- Windows 사용자를 위한 별도 설치/실행 배려:
 
 ## 12. Time Plan
 

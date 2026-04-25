@@ -65,6 +65,27 @@ flutter doctor -v
 4. `flutter doctor`
 5. 실제 에뮬레이터 또는 기기 1개 연결
 
+### Windows Friendly Default
+
+가장 덜 막히는 기본값은 `Android` 먼저, `Windows desktop`은 필요할 때만 여는 것이다.
+
+- Android만 필요하면: VS Code + Flutter + Android Studio 조합으로 충분하다.
+- Windows 데스크톱까지 필요하면: VS Code와 별도로 Windows용 Visual Studio를 설치해야 한다.
+- Visual Studio Code와 Visual Studio는 다른 프로그램이다.
+
+### Windows Desktop Caveat
+
+Windows 데스크톱 앱을 빌드하거나 실행하려면 Visual Studio의 `Desktop development with C++` 워크로드가 필요하다.
+
+권장 검증 명령:
+
+```powershell
+flutter doctor -v
+flutter devices
+```
+
+`flutter devices` 결과에 `windows`가 보이면 Windows 데스크톱 타깃 인식까지 된 것이다.
+
 ## 5. VS Code Note
 
 `code` CLI가 안 잡히면 VS Code 내부에서 `Shell Command: Install 'code' command in PATH`를 실행해 CLI를 연결한다.
@@ -103,6 +124,7 @@ flutterhac/
 - 실제 기기 연결 테스트
 - 퍼포먼스/해상도 차이 확인
 - 필요 시 OCR/데이터 전처리 보조
+- 발표 직전에는 Android와 Windows 중 실제 데모에 쓸 타깃 1개를 고정
 
 ## 8. Suggested Bootstrap Path
 
@@ -114,6 +136,8 @@ flutterhac/
 4. 메인 화면 1개와 핵심 플로우 1개를 먼저 끝낸다.
 5. AI 하네스를 붙인다.
 6. 마지막에 Widget Craft와 Wild Card를 얹는다.
+
+Windows 팀원이 빠르게 따라오게 하려면 Android 에뮬레이터 또는 실기기 1개를 먼저 성공시키고, 그 뒤에 Windows 데스크톱 타깃을 열어도 된다.
 
 ## 9. Initial Commands After Flutter Install
 
