@@ -1,11 +1,14 @@
 import { Suspense } from 'react'
-import GazeTracker from './components/GazeTracker'
+import AppErrorBoundary from './components/AppErrorBoundary'
 import FallbackUI from './components/FallbackUI'
+import GazeTracker from './components/GazeTracker'
 
 export default function App() {
   return (
-    <Suspense fallback={<FallbackUI reason="loading" />}>
-      <GazeTracker />
-    </Suspense>
+    <AppErrorBoundary>
+      <Suspense fallback={<FallbackUI reason="loading" />}>
+        <GazeTracker />
+      </Suspense>
+    </AppErrorBoundary>
   )
 }

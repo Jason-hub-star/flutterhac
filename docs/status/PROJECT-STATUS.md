@@ -2,9 +2,9 @@
 
 ## Current Stage
 
-- 상태: wild-card-spec-complete / web-robot-gaze-ready-to-implement
+- 상태: **web-robot-gaze 구현 완료 / 얼굴+고개 싱크 동작 중**
 - 날짜: 2026-04-25
-- 목적: Wild Card 트랙 — 실시간 홍채 추적 3D 로봇 눈 동기화 데모 구현 준비 완료
+- 목적: Wild Card 트랙 — 실시간 얼굴 포즈 기반 3D 로봇 고개+눈 동기화 데모
 
 ---
 
@@ -12,56 +12,100 @@
 
 | 항목 | 결정 |
 |------|------|
-| Wild Card 기능 | 실시간 시선 동기화 3D 로봇 (`web-robot-gaze/`) |
+| Wild Card 기능 | 실시간 얼굴 포즈 동기화 3D 로봇 (`web-robot-gaze/`) |
 | 스택 | React 18 + TypeScript + Vite + Three.js + MediaPipe |
 | Flutter 사용 여부 | **이 기능에 미사용** — 순수 웹 앱으로 구현 |
-| 3D 모델 | Three.js SphereGeometry primitive (GLB 변환 없이 즉시 사용) |
-| 문서 | `docs/specs/ROBOT-GAZE-SPEC.md` 완성 |
+| 3D 모델 | Three.js primitive (BoxGeometry 몸통/머리, SphereGeometry 눈) |
+| 트래킹 방식 | ~~홍채 기반~~ → **얼굴 변환 행렬 (facialTransformationMatrix)** |
 
 ---
 
-## What Is Ready
+## 구현 완료 항목
 
-**환경:**
-- GitHub 원격 저장소 연결
-- VS Code + Flutter/Dart CLI (Flutter 메인 앱용)
-- Android cmdline-tools + licenses 승인
-- flutter create / flutter test 스모크 검증 완료
-
-**Wild Card 트랙 (신규):**
-- 기술 설계 명세서 완성 (`docs/specs/ROBOT-GAZE-SPEC.md`)
-- `web-robot-gaze/` 디렉토리 생성 + README 작성
-- 시선 벡터 수식 설계 완료
-- 구현 페이즈 (0-6) + 각 페이즈 Opus 자기리뷰 계획 수립
+| Phase | 내용 | 상태 |
+|-------|------|------|
+| Phase 0 | 문서화 + Git 커밋/푸시 | ✅ |
+| Phase 1 | Vite 스캐폴딩 + Three.js 3D 로봇 렌더링 | ✅ |
+| Phase 2 | MediaPipe FaceLandmarker 연동 + 카메라 권한 | ✅ |
+| Phase 3 | 시선 동기화 (얼굴 포즈 → 로봇 고개/눈) | ✅ |
+| Phase 4 | Lerp 스무딩 + 폴백 UI | ✅ |
+| Phase 5 | 이미시브 발광 눈 + 펄스 효과 | ✅ |
+| Phase 6 | 디버그 오버레이 (D키 토글) | ✅ |
 
 ---
 
-## What Is Not Ready Yet
+## 현재 아키텍처
 
-- `web-robot-gaze/` 앱 코드 스캐폴드 (Phase 1)
-- MediaPipe 연동 구현 (Phase 2)
-- 시선 동기화 로직 (Phase 3)
-- 스무딩 + 폴백 (Phase 4)
-- 이미시브 눈 효과 (Phase 5)
-- 성능 검증 (Phase 6)
-- 메인 Flutter 앱 코드 (별도 진행)
+```
+useMediaPipe (videoReady 게이트)
+  └─ FaceLandmarker.detectForVideo()
+       └─ facialTransformationMatrixes[0].data (4×4 col-major)
+            └─ matrix4x4ToEuler() → pitch / yaw / roll
+                 └─ useSmoothGaze() → GazeOutput
+                      ├─ head: alpha=0.08 (느린 관성)
+                      └─ eye:  alpha=0.15 (빠른 미세움직임)
+                           └─ RobotModel
+                                ├─ HeadGroup <group ref> → rotation.x/y/z
+                                └─ Eye × 2 → rotation.x/y
+```
+
+### 핵심 설계 결정
+
+| 항목 | 값 | 이유 |
+|------|-----|------|
+| HEAD_SCALE | 0.95 | 거의 1:1 미러링 |
+| EYE_SCALE | 0.6 | 눈은 고개보다 작게 움직임 |
+| HEAD_TRACK_ALPHA | 0.08 | 자연스러운 관성감 |
+| EYE_TRACK_ALPHA | 0.15 | 빠른 반응 |
+| HEAD_MAX_YAW | ±72° | 극단적 회전 방지 |
+| rotation.order | ZYX | 짐벌락 회피 |
+
+---
+
+## 실행 방법
+
+```bash
+git pull origin main
+cd web-robot-gaze
+npm install        # 처음 한 번
+npm run dev        # http://localhost:5173
+```
+
+- 카메라 허용 → 좌상단 `● tracking` 확인
+- 고개를 좌우/위아래로 움직이면 로봇 고개가 실시간 동기화
+- `D` 키: 웹캠 디버그 오버레이 토글 (랜드마크 점 + 트래킹 상태)
+
+---
+
+## 테스트 체크리스트
+
+- [ ] `● tracking` 표시 확인
+- [ ] 고개 왼쪽 → 로봇 고개 왼쪽 (mirror or copy 확인)
+- [ ] 고개 끄덕임 → 로봇 pitch 반응
+- [ ] 고개 기울임 → 로봇 roll 반응
+- [ ] 얼굴 가리면 → 로봇이 중앙으로 서서히 복원
+- [ ] D키 → 웹캠 오버레이 표시/숨김
+
+### 부호 반전이 필요한 경우
+
+고개 방향이 반대로 보이면 `gazemath.ts`의 `matrix4x4ToEuler`에서:
+```ts
+// yaw 반전:  yaw * -1
+// pitch 반전: pitch * -1
+```
 
 ---
 
 ## Blockers
 
-- `web-robot-gaze/` Phase 1 미시작 (다음 단계)
-- 다른 컴퓨터에서 진행 예정 → `git pull origin main` 후 README 따라 실행
+없음. 데모 준비 완료.
 
 ---
 
-## Next Move
+## Next Move (데모 준비)
 
-```bash
-git pull origin main
-cd web-robot-gaze
-npm install          # 처음 한 번
-npm run dev          # 개발 서버
 ```
-
-전체 구현 순서: → `docs/specs/ROBOT-GAZE-SPEC.md` 참고
+"이 로봇이 지금 제 얼굴을 보고 있어요.
+ MediaPipe 얼굴 포즈 추적 + Three.js 실시간 렌더링.
+ 클라이언트 사이드 전용, API 호출 없음, 30FPS 이상."
+```

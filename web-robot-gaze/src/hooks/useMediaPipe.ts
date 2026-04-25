@@ -3,36 +3,48 @@ import { FaceLandmarker, FilesetResolver } from '@mediapipe/tasks-vision'
 import type { IrisData } from '../types/gaze'
 import { LM } from '../utils/gazemath'
 
-type Status = 'loading' | 'ready' | 'error'
+export type MPStatus = 'loading' | 'ready' | 'error'
 
-export function useMediaPipe(videoRef: React.RefObject<HTMLVideoElement | null>) {
-  const [status, setStatus] = useState<Status>('loading')
-  const [error, setError]   = useState('')
-  const irisRef   = useRef<IrisData>({ leftIris: null, rightIris: null, landmarks: null })
-  const landmarkerRef = useRef<FaceLandmarker | null>(null)
-  const rafRef        = useRef<number>(0)
-  const lastTimeRef   = useRef(-1)
+const MODEL_URL =
+  'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task'
+const WASM_URL =
+  'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm'
 
-  // Init MediaPipe
+async function createLandmarker(delegate: 'GPU' | 'CPU') {
+  const fileset = await FilesetResolver.forVisionTasks(WASM_URL)
+  return FaceLandmarker.createFromOptions(fileset, {
+    baseOptions: { modelAssetPath: MODEL_URL, delegate },
+    runningMode: 'VIDEO',
+    outputFaceBlendshapes: false,
+    outputFacialTransformationMatrixes: true,
+    numFaces: 1,
+  })
+}
+
+export function useMediaPipe(
+  videoRef: React.RefObject<HTMLVideoElement | null>,
+  videoReady: boolean,
+) {
+  const [status, setStatus]     = useState<MPStatus>('loading')
+  const [error, setError]       = useState('')
+  const irisRef                 = useRef<IrisData>({
+    leftIris: null, rightIris: null, landmarks: null, facialTransformMatrix: null,
+  })
+  const landmarkerRef           = useRef<FaceLandmarker | null>(null)
+  const rafRef                  = useRef<number>(0)
+  const lastTimeRef             = useRef(-1)
+
   useEffect(() => {
     let cancelled = false
 
     async function init() {
       try {
-        const fileset = await FilesetResolver.forVisionTasks(
-          'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm',
-        )
-        const lm = await FaceLandmarker.createFromOptions(fileset, {
-          baseOptions: {
-            modelAssetPath:
-              'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
-            delegate: 'GPU',
-          },
-          runningMode: 'VIDEO',
-          outputFaceBlendshapes: false,
-          outputFacialTransformationMatrixes: false,
-          numFaces: 1,
-        })
+        let lm: FaceLandmarker
+        try {
+          lm = await createLandmarker('GPU')
+        } catch {
+          lm = await createLandmarker('CPU')
+        }
         if (cancelled) { lm.close(); return }
         landmarkerRef.current = lm
         setStatus('ready')
@@ -48,10 +60,10 @@ export function useMediaPipe(videoRef: React.RefObject<HTMLVideoElement | null>)
     return () => { cancelled = true }
   }, [])
 
-  // Detection loop — starts once MediaPipe is ready and video is playing
+  // videoReady=true is set AFTER videoRef.current is assigned, so this is safe
   useEffect(() => {
-    if (status !== 'ready') return
-    const lm = landmarkerRef.current
+    if (status !== 'ready' || !videoReady) return
+    const lm    = landmarkerRef.current
     const video = videoRef.current
     if (!lm || !video) return
 
@@ -59,29 +71,32 @@ export function useMediaPipe(videoRef: React.RefObject<HTMLVideoElement | null>)
       if (!lm || !video) return
       if (video.readyState >= 2 && video.currentTime !== lastTimeRef.current) {
         lastTimeRef.current = video.currentTime
-        const result = lm.detectForVideo(video, performance.now())
-        const face = result.faceLandmarks?.[0]
+        try {
+          const result = lm.detectForVideo(video, performance.now())
+          const face   = result.faceLandmarks?.[0]
+          const mxData = result.facialTransformationMatrixes?.[0]?.data
 
-        if (face && face.length > 480) {
-          irisRef.current = {
-            leftIris:  face[LM.LEFT_IRIS],
-            rightIris: face[LM.RIGHT_IRIS],
-            landmarks: face,
+          if (face && face.length > 0) {
+            irisRef.current = {
+              leftIris:  face.length > 480 ? face[LM.LEFT_IRIS]  : null,
+              rightIris: face.length > 480 ? face[LM.RIGHT_IRIS] : null,
+              landmarks: face,
+              facialTransformMatrix: mxData ? Array.from(mxData) : null,
+            }
+          } else {
+            irisRef.current = { leftIris: null, rightIris: null, landmarks: null, facialTransformMatrix: null }
           }
-        } else {
-          irisRef.current = { leftIris: null, rightIris: null, landmarks: null }
+        } catch {
+          // detection errors are non-fatal
         }
       }
       rafRef.current = requestAnimationFrame(loop)
     }
 
     rafRef.current = requestAnimationFrame(loop)
-    return () => {
-      cancelAnimationFrame(rafRef.current)
-    }
-  }, [status, videoRef])
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [status, videoReady, videoRef])
 
-  // Cleanup landmarker on unmount
   useEffect(() => {
     return () => { landmarkerRef.current?.close() }
   }, [])

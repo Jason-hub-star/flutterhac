@@ -1,5 +1,5 @@
 interface Props {
-  reason: 'no-camera' | 'mediapipe-error' | 'loading'
+  reason: 'no-camera' | 'mediapipe-error' | 'loading' | 'render-error'
   message?: string
 }
 
@@ -7,6 +7,7 @@ const MESSAGES = {
   'loading':         '🤖 MediaPipe 로딩 중...',
   'no-camera':       '카메라 권한이 거부됐어요. 브라우저 주소창 자물쇠 → 카메라 허용 후 새로고침.',
   'mediapipe-error': 'MediaPipe 초기화 실패. 인터넷 연결 확인 후 새로고침.',
+  'render-error':    '렌더링 중 오류가 발생했어요. 새로고침 후 다시 시도해 주세요.',
 }
 
 export default function FallbackUI({ reason, message }: Props) {
