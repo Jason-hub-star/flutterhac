@@ -5,6 +5,26 @@
 **스택:** React 18 + TypeScript + Vite + Three.js + MediaPipe  
 **Flutter 없음** — 순수 웹 앱.
 
+> ⚠️ **현재 상태 (2026-04-25):** Phase 1 미시작 — `package.json`과 앱 코드가 아직 없음.  
+> 구현을 시작하려면 아래 "첫 셋업" 섹션부터 진행. 이미 `npm install`까지 완료된 컴퓨터라면 "개발 서버 실행"으로 바로 이동.
+
+---
+
+## 첫 셋업 (Phase 1 — 아직 스캐폴드 없을 때)
+
+```bash
+git pull origin main
+cd flutterhackerton
+
+# Vite 앱 생성 (web-robot-gaze 폴더에)
+npm create vite@latest web-robot-gaze -- --template react-ts
+cd web-robot-gaze
+
+# 의존성 설치
+npm install three @react-three/fiber @react-three/drei @mediapipe/tasks-vision
+npm install -D @types/three
+```
+
 ---
 
 ## 빠른 시작 (다른 컴퓨터에서 바로 실행)
