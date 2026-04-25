@@ -2,45 +2,66 @@
 
 ## Current Stage
 
-- 상태: environment-ready-for-android-web
+- 상태: wild-card-spec-complete / web-robot-gaze-ready-to-implement
 - 날짜: 2026-04-25
-- 목적: Flutter 해커톤용 명세/레퍼런스/스킬/초기 저장소와 로컬 Flutter 환경 준비
+- 목적: Wild Card 트랙 — 실시간 홍채 추적 3D 로봇 눈 동기화 데모 구현 준비 완료
+
+---
+
+## 프로젝트 방향 결정 (2026-04-25)
+
+| 항목 | 결정 |
+|------|------|
+| Wild Card 기능 | 실시간 시선 동기화 3D 로봇 (`web-robot-gaze/`) |
+| 스택 | React 18 + TypeScript + Vite + Three.js + MediaPipe |
+| Flutter 사용 여부 | **이 기능에 미사용** — 순수 웹 앱으로 구현 |
+| 3D 모델 | Three.js SphereGeometry primitive (GLB 변환 없이 즉시 사용) |
+| 문서 | `docs/specs/ROBOT-GAZE-SPEC.md` 완성 |
+
+---
 
 ## What Is Ready
 
+**환경:**
 - GitHub 원격 저장소 연결
-- 프로젝트 완성 명세서 템플릿
-- 3개 트랙 전략 문서
-- Flutter 공식 문서/오픈소스 큐레이션
-- 부트스트랩 세팅 가이드
-- 윈도우 팀원 전용 핸드오프 가이드
-- Codex 재사용 스킬
-- VS Code 설치 및 CLI 연결
-- Flutter / Dart 설치 및 CLI 연결
-- Android `cmdline-tools` 설치
-- Android licenses 승인
-- Android Studio용 Flutter / Dart 플러그인 파일 배치
-- `flutter create` / `flutter analyze` / `flutter test` 스모크 검증
+- VS Code + Flutter/Dart CLI (Flutter 메인 앱용)
+- Android cmdline-tools + licenses 승인
+- flutter create / flutter test 스모크 검증 완료
+
+**Wild Card 트랙 (신규):**
+- 기술 설계 명세서 완성 (`docs/specs/ROBOT-GAZE-SPEC.md`)
+- `web-robot-gaze/` 디렉토리 생성 + README 작성
+- 시선 벡터 수식 설계 완료
+- 구현 페이즈 (0-6) + 각 페이즈 Opus 자기리뷰 계획 수립
+
+---
 
 ## What Is Not Ready Yet
 
-- 실제 앱 코드 스캐폴드
-- 실프로젝트용 명세 확정
-- 발표 플랫폼 확정
-- Xcode 전체 설치
-- CocoaPods 설치
-- Android Studio 재시작 후 플러그인 활성 상태 최종 확인
+- `web-robot-gaze/` 앱 코드 스캐폴드 (Phase 1)
+- MediaPipe 연동 구현 (Phase 2)
+- 시선 동기화 로직 (Phase 3)
+- 스무딩 + 폴백 (Phase 4)
+- 이미시브 눈 효과 (Phase 5)
+- 성능 검증 (Phase 6)
+- 메인 Flutter 앱 코드 (별도 진행)
+
+---
 
 ## Blockers
 
-- 발표 플랫폼이 아직 확정되지 않았다.
-- 실제 앱 이름/문제정의/핵심 데모 시나리오가 아직 템플릿 수준이다.
-- iOS/macOS 네이티브 개발을 하려면 Xcode와 CocoaPods가 추가로 필요하다.
+- `web-robot-gaze/` Phase 1 미시작 (다음 단계)
+- 다른 컴퓨터에서 진행 예정 → `git pull origin main` 후 README 따라 실행
 
-## Recommended Next Moves
+---
 
-1. 주력 트랙과 앱 아이디어를 명세서에 바로 적는다.
-2. `docs/specs/HACKATHON-PROJECT-SPEC-DRAFT.md`를 실제 프로젝트 정보로 바꾼다.
-3. Windows 팀원 노트북도 같은 방식으로 최소 1개 타깃을 연다.
-4. Windows 데스크톱이 필요하면 Visual Studio의 `Desktop development with C++` 워크로드까지 설치한다.
-5. 앱 스캐폴드를 만든 뒤 핵심 플로우 1개를 먼저 닫는다.
+## Next Move
+
+```bash
+git pull origin main
+cd web-robot-gaze
+npm install          # 처음 한 번
+npm run dev          # 개발 서버
+```
+
+전체 구현 순서: → `docs/specs/ROBOT-GAZE-SPEC.md` 참고
