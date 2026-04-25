@@ -89,6 +89,18 @@ npm run dev        # http://localhost:5173
 
 ---
 
+## 배포
+
+| 환경 | URL |
+|------|-----|
+| Production | https://web-robot-gaze.vercel.app |
+| Vercel 대시보드 | https://vercel.com/kimjuyoung1127s-projects/web-robot-gaze |
+
+- HTTPS 자동 제공 → `getUserMedia` 카메라 권한 정상 동작
+- 빌드: `tsc && vite build` (630 모듈, ~1.1MB 번들)
+
+---
+
 ## Blockers
 
 없음. 데모 준비 완료.
