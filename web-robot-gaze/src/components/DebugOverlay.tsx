@@ -96,7 +96,7 @@ export default function DebugOverlay({ videoRef, irisRef, visible }: Props) {
         padding: '2px 6px',
         textAlign: 'center',
       }}>
-        D — debug 닫기
+        D 키로 토글
       </div>
     </div>
   )

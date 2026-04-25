@@ -11,7 +11,7 @@ import type { IrisData } from '../types/gaze'
 export default function GazeTracker() {
   const videoRef              = useRef<HTMLVideoElement | null>(null)
   const [videoReady, setVideoReady] = useState(false)
-  const [debugVisible, setDebugVisible] = useState(false)
+  const [debugVisible, setDebugVisible] = useState(true)
 
   const handleVideoReady = useCallback(
     (ref: React.RefObject<HTMLVideoElement | null>) => {

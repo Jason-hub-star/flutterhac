@@ -59,6 +59,7 @@ useMediaPipe (videoReady 게이트)
 | EYE_TRACK_ALPHA | 0.15 | 빠른 반응 |
 | HEAD_MAX_YAW | ±72° | 극단적 회전 방지 |
 | rotation.order | ZYX | 짐벌락 회피 |
+| yaw 부호 | `-yaw` | 미러 모드 — 사용자와 같은 방향으로 고개 회전 |
 
 ---
 
@@ -79,20 +80,12 @@ npm run dev        # http://localhost:5173
 
 ## 테스트 체크리스트
 
-- [ ] `● tracking` 표시 확인
-- [ ] 고개 왼쪽 → 로봇 고개 왼쪽 (mirror or copy 확인)
-- [ ] 고개 끄덕임 → 로봇 pitch 반응
-- [ ] 고개 기울임 → 로봇 roll 반응
-- [ ] 얼굴 가리면 → 로봇이 중앙으로 서서히 복원
-- [ ] D키 → 웹캠 오버레이 표시/숨김
-
-### 부호 반전이 필요한 경우
-
-고개 방향이 반대로 보이면 `gazemath.ts`의 `matrix4x4ToEuler`에서:
-```ts
-// yaw 반전:  yaw * -1
-// pitch 반전: pitch * -1
-```
+- [x] `● tracking` 표시 확인
+- [x] 고개 왼쪽 → 로봇 고개 왼쪽 (미러 모드 적용 완료)
+- [x] 고개 끄덕임 → 로봇 pitch 반응
+- [x] 고개 기울임 → 로봇 roll 반응
+- [x] 얼굴 가리면 → 로봇이 중앙으로 서서히 복원
+- [x] D키 → 웹캠 오버레이 표시/숨김 (기본값: 표시)
 
 ---
 

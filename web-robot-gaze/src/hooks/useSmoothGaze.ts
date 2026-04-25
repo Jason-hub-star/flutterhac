@@ -38,18 +38,18 @@ export function useSmoothGaze() {
     if (matrix && matrix.length >= 16 && irisData.landmarks) {
       const { pitch, yaw, roll } = matrix4x4ToEuler(matrix)
 
-      // Head rotation: full body movement, clamped
+      // Head rotation: mirror mode — negate yaw so robot turns same direction as user
       const headPitch = clamp(pitch * HEAD_SCALE, -HEAD_MAX_PITCH, HEAD_MAX_PITCH)
-      const headYaw   = clamp(yaw * HEAD_SCALE, -HEAD_MAX_YAW, HEAD_MAX_YAW)
-      const headRoll  = clamp(roll * HEAD_SCALE, -HEAD_MAX_ROLL, HEAD_MAX_ROLL)
+      const headYaw   = clamp(-yaw  * HEAD_SCALE, -HEAD_MAX_YAW,   HEAD_MAX_YAW)
+      const headRoll  = clamp(roll  * HEAD_SCALE, -HEAD_MAX_ROLL,  HEAD_MAX_ROLL)
 
       current.current.head.pitch = lerp(current.current.head.pitch, headPitch, HEAD_TRACK_ALPHA)
       current.current.head.yaw   = lerp(current.current.head.yaw,   headYaw,   HEAD_TRACK_ALPHA)
       current.current.head.roll  = lerp(current.current.head.roll,  headRoll,  HEAD_TRACK_ALPHA)
 
-      // Eye movement: scaled-down relative to head
+      // Eye movement: same mirror correction
       const eyePitch = pitch * EYE_SCALE
-      const eyeYaw   = yaw   * EYE_SCALE
+      const eyeYaw   = -yaw  * EYE_SCALE
 
       current.current.left.pitch  = lerp(current.current.left.pitch,  eyePitch, EYE_TRACK_ALPHA)
       current.current.left.yaw    = lerp(current.current.left.yaw,    eyeYaw,   EYE_TRACK_ALPHA)
