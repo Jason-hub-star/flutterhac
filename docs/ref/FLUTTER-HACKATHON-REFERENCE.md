@@ -44,6 +44,12 @@
 - Visual Studio에는 `Desktop development with C++` 워크로드가 필요하다.
 - 검증 기본 명령은 `flutter doctor -v`, `flutter devices`다.
 
+## Editor Positioning
+
+- `VS Code`: Flutter 해커톤에서 가장 빠른 주 편집기
+- `Android Studio`: Android SDK, emulator, SDK Manager, Android 문제 진단용 핵심 도구
+- Android를 실제로 돌릴 계획이면 Android Studio는 "안 써도 되는 앱"이라기보다 "툴체인 안정화용 기반 도구"에 가깝다
+
 ### AI-Related Official References
 
 - GenUI 시작: [Get started with the GenUI SDK for Flutter](https://docs.flutter.dev/ai/genui/get-started)

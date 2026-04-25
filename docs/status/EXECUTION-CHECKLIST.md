@@ -4,8 +4,8 @@
 
 - [ ] 주력 트랙 1개와 보조 트랙 1개를 확정한다
 - [ ] `PROJECT-COMPLETION-SPEC-TEMPLATE.md`를 실제 프로젝트용으로 채운다
-- [ ] MacBook에 Flutter SDK를 설치한다
-- [ ] `flutter doctor`를 통과시킨다
+- [x] MacBook에 Flutter SDK를 설치한다
+- [x] `flutter doctor`를 통과시킨다
 - [ ] Windows 팀원 노트북에서 Android 또는 Windows 타깃 1개를 연다
 - [ ] Windows 데스크톱이 필요하면 Visual Studio C++ 워크로드까지 설치한다
 
@@ -42,3 +42,13 @@
 - [ ] 발표 스크립트와 데모 순서를 정리한다
 - [ ] 제출 자산을 정리한다
 - [ ] Windows 팀원 기준 재현 절차가 문서대로 되는지 점검한다
+
+## Verified On This MacBook
+
+- [x] `code --version`
+- [x] `flutter --version`
+- [x] `dart --version`
+- [x] `flutter create` 스모크 앱 생성
+- [x] `flutter analyze` 스모크 통과
+- [x] `flutter test` 스모크 통과
+- [ ] Android Studio 재시작 후 Flutter 플러그인 로드 확인

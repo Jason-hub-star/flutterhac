@@ -5,11 +5,20 @@
 이번 작업 시점의 로컬 확인 기준:
 
 - `git`: 사용 가능
-- `flutter`: 미설치 또는 PATH 미연결
-- `dart`: 미설치 또는 PATH 미연결
-- `code`: VS Code 앱은 있을 수 있으나 CLI는 미연결
+- `flutter`: 설치 및 PATH 연결 완료
+- `dart`: 설치 및 PATH 연결 완료
+- `code`: 설치 및 PATH 연결 완료
+- `Android Studio`: 설치됨
+- `Android SDK`: 설치됨
+- `Android cmdline-tools`: 설치 및 연결 완료
+- `Android licenses`: 승인 완료
 
-즉, 지금은 "개발 시작 전 부트스트랩 단계"다.
+즉, Android / Web / macOS(Flutter desktop 표면) 기준으로는 기본 부트스트랩이 끝난 상태다.
+
+남은 로컬 블로커:
+
+- iOS/macOS 네이티브 개발용 전체 Xcode 설치
+- CocoaPods
 
 ## 2. GitHub First Setup
 
@@ -52,6 +61,15 @@ git push -u origin main
 flutter doctor
 flutter doctor -v
 ```
+
+### Current Result On This MacBook
+
+- `flutter doctor -v` 기준 Flutter SDK와 Android toolchain은 정상 인식된다.
+- Android SDK 경로는 `~/Library/Android/sdk`다.
+- Java는 Android Studio 번들 JDK를 사용 중이다.
+- Android Studio 사용자 플러그인 디렉터리에 Flutter / Dart 플러그인 파일이 배치돼 있다.
+- Android Studio가 이미 실행 중이었다면 한 번 재시작해야 플러그인이 실제로 로드된다.
+- 남은 항목은 Xcode와 CocoaPods뿐이다.
 
 ## 4. Windows Teammate Setup
 
@@ -115,6 +133,7 @@ flutterhac/
 - 명세 작성
 - 구조 설계
 - Codex 자동화
+- VS Code에서 메인 구현
 - iOS/macOS 검증
 - 발표 스크립트 정리
 
@@ -165,3 +184,19 @@ flutter run
 - `freezed`/`build_runner`: API 모델이 늘어나면 도입
 - `integration_test`: 발표 핵심 플로우를 자동 검증하고 싶을 때 도입
 - `melos`: 패키지가 3개 이상일 때만 도입
+
+## 11. Editor Roles
+
+### VS Code
+
+- 주 편집기
+- Flutter / Dart 확장 기반 빠른 구현
+- 가벼운 탐색과 수정에 유리
+
+### Android Studio
+
+- Android SDK Manager
+- Emulator / AVD 관리
+- Android 전용 점검과 필요 시 JetBrains 계열 IDE 작업
+
+해커톤에서는 보통 `VS Code로 구현`하고 `Android Studio로 Android 툴체인 관리`하는 조합이 가장 무난하다.
